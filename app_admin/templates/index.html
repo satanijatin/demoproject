@@ -1,0 +1,107 @@
+{% load custom_tag %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+
+  
+  <div><a href="{% url "viewData" %}" class="btn btn-primary">View Admin</a></div>
+  <h2>Add Admin</h2>
+  
+  {% if fail_msg %}
+  <div class="alert alert-danger alert-dismissible">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Danger!</strong> {{ fail_msg }}
+  </div>
+  {% endif %}
+
+  {% if success_msg  %}
+  <div class="alert alert-success alert-dismissible">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Success!</strong> {{ success_msg }}  
+  </div>
+  {% endif %}
+
+
+  <form class="form-horizontal" action="{% url "addAdmin"  %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" class="form-control" id="id" value="{{ select_row.id }}" name="id">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="email">Name:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="name" value="{{ select_row.name }}" placeholder="Enter Name" name="name">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="email">Email:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="email" value="{{ select_row.email }}" placeholder="Enter email" name="email">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="pwd">Password:</label>
+      <div class="col-sm-10">          
+        <input type="password" class="form-control" id="pwd" value="{{ select_row.password }}" placeholder="Enter password" name="password" required>
+      </div>
+    </div>
+    <div class="form-group">
+       
+     
+       
+      
+      <label class="control-label col-sm-2" for="pwd">Languege:</label>
+      <div class="col-sm-10"> 
+            
+        <div class="form-check">
+          
+          <input class="form-check-input" type="checkbox" id="check1" name="language[]"   {% if select_row.language|isExists:'PHP'  %}  checked {% endif %} value="PHP" >
+          <label class="form-check-label">PHP</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="check2" name="language[]"   {% if select_row.language|isExists:'Python'  %}  checked {% endif %} value="Python" >
+          <label class="form-check-label">Python</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="check3" name="language[]"  {% if select_row.language|isExists:'Android'  %}  checked {% endif %} value="Android" >
+          <label class="form-check-label">Android</label>
+        </div>
+        
+      </div>
+      
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="pwd">Gender:</label>
+      <div class="col-sm-10">       
+      <div class="form-check">
+        <input type="radio" class="form-check-input" id="radio1" name="gender" value="Male" {% if select_row.gender == 'Male' %} checked {% endif %} >Male
+        <label class="form-check-label" for="radio1"></label>
+      </div>
+      <div class="form-check">
+        <input type="radio" class="form-check-input" id="radio2" name="gender" value="Female"  {% if select_row.gender == 'Female' %} checked {% endif %}>Female
+        <label class="form-check-label" for="radio2"></label>
+      </div>
+      </div>
+    </div>
+   
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>
