@@ -1,8 +1,83 @@
 from django.shortcuts import render,redirect
+from rest_framework.response import Response
 from .models import *
+from .serializer import *
+from django.contrib.auth.models import User
+from rest_framework.decorators import api_view
+
 
 
 # Create your views here.
+
+@api_view(['GET'])
+def viewdatabook(request):
+    datas=Book.objects.all()
+    serializers=BookSerializer(datas,many=True)
+    return Response({"Status":202,"data":serializers.data})
+
+@api_view(['POST'])
+def insertCategory(request):
+     data = request.data
+     serializer = CategorySerializer(data=request.data)
+     if not serializer.is_valid():
+          return Response({"status": "403","message":"Something Went Wrong","error":serializer.errors})
+     
+     serializer.save()
+     return Response({"status": "200","message":"Save Successfully"})
+
+@api_view(['POST'])
+def insertbook(request):
+     data = request.data
+     serializer = BookSerializer1(data=request.data)
+     if not serializer.is_valid():
+          return Response({"status": "403","message":"Something Went Wrong","error":serializer.errors})
+     
+     serializer.save()
+     return Response({"status": "200","message":"Save Successfully"})
+
+@api_view(['GET'])
+def viewdataall(request):
+    datas=Admin.objects.all()
+    serializers=AdminSerializer(datas,many=True)
+    return Response({"Status":202,"data":serializers.data})
+
+
+@api_view(['POST'])
+def insertdata(request):
+     data = request.data
+     serializer = AdminSerializer(data=request.data)
+     if not serializer.is_valid():
+          return Response({"status": "403","message":"Something Went Wrong","error":serializer.errors})
+     
+     serializer.save()
+     return Response({"status": "200","message":"Save Successfully"})
+
+@api_view(['POST'])
+def updatedata(request,id):
+     
+    try:
+            admin_id=Admin.objects.get(id=id)
+
+            serializer = AdminSerializer(admin_id,data=request.data,partial=True)
+            if not serializer.is_valid():
+                return Response({"status": "403","message":"Something Went Wrong","error":serializer.errors})
+     
+            serializer.save()
+            return Response({"status": "200","message":"Update Successfully"})
+    except :
+            return Response({"status": "403","message":"Invalid id"})
+    
+@api_view(['DELETE'])
+def deletedata(request,id):
+     
+    try:
+            admin_id=Admin.objects.get(id=id)
+              
+            admin_id.delete()
+            return Response({"status": "200","message":"Delete Successfully"})
+    except :
+            return Response({"status": "403","message":"Invalid id"})
+
 
 def index(request):
     return render(request,"index.html")

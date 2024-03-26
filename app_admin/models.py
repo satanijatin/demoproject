@@ -12,3 +12,11 @@ class Admin(models.Model):
     def __str__(self):
         return self.name
     
+
+class Category(models.Model):
+    cname = models.CharField(max_length=50)
+
+class Book(models.Model):
+    category =models.ForeignKey(Category, on_delete=models.CASCADE)
+    bname = models.CharField(max_length=50)
+  

@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body>
 
@@ -41,7 +43,9 @@
         <td>{{ row.language }}</td>
         <td>{{ row.gender }}</td>
         <td><a href="{% url "updateData" row.id%}" class="btn btn-success">Edit</a>
-            <a href="{% url "deleteData" row.id %}" class="btn btn-danger">Delete</a></td>
+            {% comment %} <a href="{% url "deleteData" row.id %}" class="btn btn-danger">Delete</a> {% endcomment %}
+            <button onclick="deleteData({{row.id}})">Delete</button>
+          </td>
       </tr>
       {% endfor %}
      
@@ -49,9 +53,23 @@
   </table>
 </div>
 
-
-
-
-
 </body>
+<script>
+  function deleteData(id){
+   
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "/deleteData/"+id;
+      }
+    });
+  }
+</script>
 </html>

@@ -23,5 +23,13 @@ urlpatterns = [
     path('viewData/', views.viewData,name='viewData'),
     path('updateData/<int:admin_id>/', views.updateData,name='updateData'),
     path('deleteData/<int:admin_id>', views.deleteData,name='deleteData'),
+    path('viewdataall',views.viewdataall),
+    path('insertdata',views.insertdata),
+     path('updatedata/<id>',views.updatedata),
+     path('deletedata/<id>',views.deletedata),
+     path('insertCategory',views.insertCategory),
+     path('insertbook',views.insertbook),
+     path('viewdatabook',views.viewdatabook),
+     
 
 ]
