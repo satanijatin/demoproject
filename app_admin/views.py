@@ -1,13 +1,33 @@
 from django.shortcuts import render,redirect
 from rest_framework.response import Response
 from .models import *
+from django.http import JsonResponse
 from .serializer import *
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
+from django.conf import settings
 
-
+import http.client
 
 # Create your views here.
+
+def send_otp(request):
+    print("FUNCTION CALLED")
+    conn = http.client.HTTPSConnection("api.msg91.com")
+    authkey = settings.AUTH_KEY 
+    headers = { 'content-type': "application/json" }
+    url = "http://control.msg91.com/api/sendotp.php?otp=1258"+"&message="+"Your otp is 1258" +"&mobile=8866502411"+"&authkey="+authkey+"&country=91"
+    url = url.replace(" ", "%20")
+
+    conn.request("GET", url , headers=headers)
+    res = conn.getresponse()
+    data = res.read()
+    print(data)
+    return JsonResponse({"data":"success"})
+
+
+
+
 
 @api_view(['GET'])
 def viewdatabook(request):

@@ -30,6 +30,7 @@ urlpatterns = [
      path('insertCategory',views.insertCategory),
      path('insertbook',views.insertbook),
      path('viewdatabook',views.viewdatabook),
+     path('send_otp',views.send_otp)
      
 
 ]

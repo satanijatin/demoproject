@@ -33,17 +33,13 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
-    category=CategorySerializer()
+    category=CategorySerializer(many=True)
     class Meta:
         model=Book
         fields='__all__'
 
-    # def create(self,validated_data):
-
-    #     usr=Book.objects.create(bname=validated_data['bname'],
-    #                             category_id=validated_data['category'])
-    #     return usr
-    
+  
+   
 
 class BookSerializer1(serializers.ModelSerializer):
     
