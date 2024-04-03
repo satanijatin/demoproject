@@ -47,8 +47,8 @@ def insertCategory(request):
 
 @api_view(['POST'])
 def insertbook(request):
-     data = request.data
-     serializer = BookSerializer1(data=request.data)
+    
+     serializer = BookSerializer(data=request.data)
      if not serializer.is_valid():
           return Response({"status": "403","message":"Something Went Wrong","error":serializer.errors})
      
@@ -121,7 +121,7 @@ def addAdmin(request):
             Admin.objects.create(
                 name = request.POST['name'],
                 email = request.POST['email'],
-                password = request.POST['password'],
+                password = make_password(request.POST['password']),
                 language = str_lan,
                 gender = request.POST['gender'],
             )
